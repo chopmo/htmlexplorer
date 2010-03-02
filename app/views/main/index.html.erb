@@ -1,0 +1,34 @@
+<h1>URL and CSS selector</h1>
+<% form_tag("") do -%>
+   <table border="0" padding="5px">
+     <tr>
+       <td>URL</td>
+       <td><%= text_field_tag "source_url", @source_url, :size => 75 %></td>
+     </tr>
+     <tr>
+       <td>CSS selector</td>
+       <td><%= text_field_tag "css_selector", @css_selector, :size => 75 %></td>
+     </tr>
+     <tr>
+       <td colspan="2">
+         <%= submit_tag "Do it" %>
+       </td>
+     </tr>
+   </table>
+<% end -%>
+
+<h1>Result</h1>
+
+
+<div id="result">
+  <% if @snippets.nil? %>
+    <i>Enter URL and CSS selector</i>
+  <% else %>
+    <% @snippets.each do |s| %>
+      <pre>
+        <%= h s %>
+      </pre>
+      <hr>
+    <% end %>
+  <% end %>
+</div>
