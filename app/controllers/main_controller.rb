@@ -1,13 +1,17 @@
 require "open-uri"
 require 'nokogiri'
+require 'net/http'
 
 class MainController < ApplicationController
+
   
   def index
     @source_url = params[:source_url]
     if (not request.post?) or @source_url.blank?
       return
     end
+
+    @source_url = follow_redirects(@source_url)
     
     @css_selector1 = params[:css_selector1].strip
     @css_selector2 = params[:css_selector2].strip
@@ -38,5 +42,16 @@ class MainController < ApplicationController
       @snippets << html_sub_snippets
     end
 
+  end
+
+  private
+
+  def follow_redirects(url)
+    while true 
+      resp = Net::HTTP.get_response(URI.parse(url))
+      break if not ["301", "302"].include?(resp.code)
+      url = resp.header["location"]
+    end
+    url
   end
 end
