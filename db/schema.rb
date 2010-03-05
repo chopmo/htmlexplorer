@@ -13,7 +13,7 @@ ActiveRecord::Schema.define(:version => 20100302221303) do
 
   create_table "cached_pages", :force => true do |t|
     t.string   "url"
-    t.text     "contents"
+    t.binary   "contents"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

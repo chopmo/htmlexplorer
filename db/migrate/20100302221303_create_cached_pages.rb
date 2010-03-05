@@ -2,7 +2,7 @@ class CreateCachedPages < ActiveRecord::Migration
   def self.up
     create_table :cached_pages do |t|
       t.string :url
-      t.text :contents
+      t.binary :contents
       t.timestamps
     end
   end
