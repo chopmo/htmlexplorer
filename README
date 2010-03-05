@@ -1,10 +1,21 @@
-== htmlexplorer ==
+== Introduction
+This is a very simple app to help test out different Nokogiri search
+expressions. The target page is cached to speed things up. 
 
-This is a very simple app to help test out different Nokogiri search expressions. No error checking or the like. 
+I created this project as a tool to experiment with different CSS
+selectors for some screen scraping tasks I'm working on.
 
-I created this project as a tool to experiment with different CSS selectors for some screen scraping tasks I'm working on. 
+== Gem dependencies 
+Bundler >= 0.9.7
 
-Ideas for improvements: 
- * Async page loads
+== Installation and startup
+bundle install
+rake db:migrate
+script/server
+
+== Usage
+Point a browser at http://localhost:3000 and follow the instructions
+
+== Ideas for improvements 
  * Live result updates (ie. after a short while of inactivity in the text field)
-
+ * Make it possible to clear pages from the cache (ie. force reload)

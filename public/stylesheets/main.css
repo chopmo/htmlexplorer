@@ -1,0 +1,17 @@
+BODY {
+    font-family: helvetica;
+    font-size: small;
+}
+.result {
+    border: 2px solid lightblue;
+    padding: 5px;
+    margin: 10px;
+}
+
+.zebra1 {
+    /* default */
+}
+
+.zebra2 {
+    background-color: #EAEAEA;
+}

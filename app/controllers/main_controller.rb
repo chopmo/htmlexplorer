@@ -1,19 +1,19 @@
 require "open-uri"
 require 'nokogiri'
-require 'iconv'
-#require 'net/http'
 
 class MainController < ApplicationController
+  
   def index
     @source_url = params[:source_url]
     if (not request.post?) or @source_url.blank?
       return
     end
     
-    if params[:css_selector].blank?
-      @css_selector = "html"
-    else
-      @css_selector = params[:css_selector].strip
+    @css_selector1 = params[:css_selector1].strip
+    @css_selector2 = params[:css_selector2].strip
+
+    if @css_selector1.blank?
+      @css_selector1 = "html"
     end
     
     cached_page = CachedPage.find(:first, :conditions => { :url => @source_url })
@@ -23,14 +23,20 @@ class MainController < ApplicationController
     end
 
     doc = Nokogiri(cached_page.contents)
-    search_results = doc.search(@css_selector)
+    search_results = doc.search(@css_selector1)
 
     @snippets = []
-    xsl = Nokogiri::XSLT(File.read("app/controllers/pp.xsl"))
     search_results.each do |snippet|
-      html = xsl.apply_to(snippet).to_s
-      html = Iconv.new("utf-8", "iso-8859-1").iconv(html)
-      @snippets << html
+
+      if @css_selector2.blank?
+        html_sub_snippets = [snippet.to_html]
+      else
+        sub_snippets = snippet.search(@css_selector2)
+        html_sub_snippets = sub_snippets.map { |s| s.to_html }
+      end
+      
+      @snippets << html_sub_snippets
     end
+
   end
 end

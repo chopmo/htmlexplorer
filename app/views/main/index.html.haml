@@ -1,0 +1,37 @@
+%h1 HTML explorer
+- form_tag("") do 
+  %h3 URL
+  %i This is URL of the page to scrape. 
+  %br
+  = text_field_tag "source_url", @source_url, :size => 75
+
+  %h3 Main selector
+  %i The CSS selector that Nokogiri will apply to the page.
+  %i For example, "DIV TD" will select all TD tags that appear inside DIV tags.
+  %br
+  = text_field_tag "css_selector1", @css_selector1, :size => 75
+  
+  %h3 Sub selector (optional)
+  %i A CSS selector that will be applied to each result from running the main selector. 
+  %br
+  = text_field_tag "css_selector2", @css_selector2, :size => 75
+
+  %br
+  %br
+  = submit_tag "Do it" 
+
+- if not @snippets.nil? 
+  %h2 Result
+  - @snippets.each do |sub_snippet|
+    %div.result
+      - sub_snippet.each do |snippet|
+        - @zebra = !@zebra
+        -# How can I DRY this up?
+        - if @zebra
+          .zebra1
+            %pre
+              %code= h snippet
+        - else
+          .zebra2
+            %pre
+              %code= h snippet
